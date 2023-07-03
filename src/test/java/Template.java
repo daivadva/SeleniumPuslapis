@@ -1,4 +1,5 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -82,32 +83,24 @@ public class Template {
         Assert.assertEquals(driver.findElement(By.id("sleepInBed-result")).getText(), "Yes");
         Assert.assertEquals(driver.findElement(By.id("HaveMeal-result")).getText(), "Yes");
     }
-
+//@Ignore
     @Test
     public void getParkingRadio() throws InterruptedException {
         driver.findElement(By.id("start")).click();
         driver.findElement(By.xpath("/html/body/form/button")).click();
         Assert.assertEquals(driver.findElement(By.id("parking-result-start")).getText(), "Yes");
         Thread.sleep(5000);
-        driver.findElement(By.id("mid")).click();
-        driver.findElement(By.xpath("/html/body/form/button")).click();
-        Assert.assertEquals(driver.findElement(By.id("parking-result-start")).isSelected(), false);
-        Assert.assertEquals(driver.findElement(By.id("parking-result-mid")).isSelected(), true);
-        Assert.assertEquals(driver.findElement(By.id("parking-result-end")).isSelected(), false);
-        Thread.sleep(5000);
         driver.findElement(By.id("start")).click();
-        driver.findElement(By.xpath("/html/body/form/button")).click();
-        Assert.assertEquals(driver.findElement(By.id("parking-result-start")).isSelected(), true);
-        Assert.assertEquals(driver.findElement(By.id("parking-result-mid")).isSelected(), false);
-        Assert.assertEquals(driver.findElement(By.id("parking-result-end")).isSelected(), false);
-        Thread.sleep(5000);
+        driver.findElement(By.id("mid")).click();
         driver.findElement(By.id("end")).click();
         driver.findElement(By.xpath("/html/body/form/button")).click();
-        Assert.assertEquals(driver.findElement(By.id("parking-result-start")).isSelected(), false);
-        Assert.assertEquals(driver.findElement(By.id("parking-result-mid")).isSelected(), false);
-        Assert.assertEquals(driver.findElement(By.id("parking-result-end")).isSelected(), true);
+        Assert.assertEquals(driver.findElement(By.id("start")).isSelected(), false);
+        Assert.assertEquals(driver.findElement(By.id("mid")).isSelected(), false);
+        Assert.assertEquals(driver.findElement(By.id("end")).isSelected(), true);
 
-        driver.findElement(By.xpath("/html/body/form/button")).click();
+        Assert.assertEquals(driver.findElement(By.id("parking-result-start")).getText(), "No");
+        Assert.assertEquals(driver.findElement(By.id("parking-result-mid")).getText(), "No");
+        Assert.assertEquals(driver.findElement(By.id("parking-result-end")).getText(), "Yes");
     }
 
     @Test
@@ -129,11 +122,13 @@ public class Template {
         driver.findElement(By.xpath("/html/body/form/button")).click();
     }
 
-//    @Test
-//    public void getDatetime() {
-//        driver.findElement(By.id("datetime-local")).sendKeys("06/30/2023T07:40PM");
-//        driver.findElement(By.xpath("/html/body/form/button")).click();
-//    }
+    @Test
+    public void getDatetime() {
+        driver.findElement(By.id("datetime-local")).sendKeys("06/30/2023");
+        driver.findElement(By.id("datetime-local")).sendKeys(Keys.TAB);
+    driver.findElement(By.id("datetime-local")).sendKeys("07:40PM");
+        driver.findElement(By.xpath("/html/body/form/button")).click();
+    }
 
 //    @Test
 //    public void getMonth() {
@@ -147,10 +142,11 @@ public class Template {
         driver.findElement(By.xpath("/html/body/form/button")).click();
     }
 
-    @Ignore
+
     @Test
     public void reset(){
         driver.findElement(By.id("reset")).click();
+        driver.findElement(By.xpath("/html/body/form/button")).click();
     }
 
 
